@@ -1,14 +1,24 @@
 class Solution {
 public:
     int romanToInt(string s) {
-        unordered_map<char, int> c = {{'I', 1},{'V', 5},{'X', 10},{'L', 50},{'C', 100},{'D',500},{'M',1000}};
-        int result = 0;
-        for(int i=0;i<s.size();i++){
-            if(i==0||c[s[i]] <= c[s[i - 1]]) 
-                result += c[s[i]];
-            else
-                result += c[s[i]]-2*c[s[i-1]];
-        }
-        return result;
-    }
+        int ans = 0;
+    vector<int> roman(128);
+
+    roman['I'] = 1;
+    roman['V'] = 5;
+    roman['X'] = 10;
+    roman['L'] = 50;
+    roman['C'] = 100;
+    roman['D'] = 500;
+    roman['M'] = 1000;
+
+    for (int i = 0; i + 1 < s.length(); ++i)
+      if (roman[s[i]] < roman[s[i + 1]])
+        ans -= roman[s[i]];
+      else
+        ans += roman[s[i]];
+
+    return ans + roman[s.back()];
+  }
 };
+  
